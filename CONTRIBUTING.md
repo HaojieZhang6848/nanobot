@@ -12,6 +12,8 @@ software together: with care, clarity, and respect for the next person reading t
 
 ## Maintainers
 
+Maintainers are community stewards who help review, organize, and maintain the project. The list below describes each maintainer's current open-source project responsibilities.
+
 | Maintainer | Focus |
 |------------|-------|
 | [@re-bin](https://github.com/re-bin) | Project lead, `main` branch |
@@ -103,8 +105,11 @@ pytest
 # Lint code
 ruff check nanobot/
 
-# Format code
-ruff format nanobot/
+# Format code — optional. The existing tree predates `ruff format`,
+# so running it across `nanobot/` produces a large unrelated diff
+# (E501 is ignored, so many existing lines exceed the 100-char setting).
+# Format only files you've actually touched, not the whole package.
+ruff format <files-you-changed>
 ```
 
 ## Contribution License
