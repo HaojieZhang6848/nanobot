@@ -12,6 +12,7 @@ from urllib.parse import quote, urljoin, urlparse
 
 import httpx
 from loguru import logger
+from pydantic import Field
 
 from nanobot.agent.tools.base import Tool, tool_parameters
 from nanobot.agent.tools.schema import (
@@ -20,7 +21,7 @@ from nanobot.agent.tools.schema import (
     StringSchema,
     tool_parameters_schema,
 )
-from nanobot.config.tool_configs import WebFetchConfig, WebSearchConfig, WebToolsConfig
+from nanobot.config_base import Base
 from nanobot.utils.helpers import build_image_content_blocks
 
 # Shared constants
@@ -32,6 +33,29 @@ _VOLCENGINE_SEARCH_API_URL = "https://open.feedcoopapi.com/search_api/web_search
 _VOLCENGINE_TRAFFIC_TAG = "nanobot"
 _VOLCENGINE_TIME_RANGES = {"OneDay", "OneWeek", "OneMonth", "OneYear"}
 _VOLCENGINE_DATE_RANGE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}\.\.\d{4}-\d{2}-\d{2}$")
+
+
+class WebSearchConfig(Base):
+    """Web search configuration."""
+    provider: str = "duckduckgo"
+    api_key: str = ""
+    base_url: str = ""
+    max_results: int = 5
+    timeout: int = 30
+
+
+class WebFetchConfig(Base):
+    """Web fetch tool configuration."""
+    use_jina_reader: bool = True
+
+
+class WebToolsConfig(Base):
+    """Web tools configuration."""
+    enable: bool = True
+    proxy: str | None = None
+    user_agent: str | None = None
+    search: WebSearchConfig = Field(default_factory=WebSearchConfig)
+    fetch: WebFetchConfig = Field(default_factory=WebFetchConfig)
 
 
 def _strip_tags(text: str) -> str:

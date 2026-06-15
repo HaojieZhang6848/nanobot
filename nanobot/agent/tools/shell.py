@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from loguru import logger
+from pydantic import Field
 
 from nanobot.agent.tools.base import Tool, tool_parameters
 from nanobot.agent.tools.context import current_request_session_key
@@ -33,7 +34,7 @@ from nanobot.agent.tools.schema import (
     tool_parameters_schema,
 )
 from nanobot.config.paths import get_media_dir
-from nanobot.config.tool_configs import ExecToolConfig
+from nanobot.config_base import Base
 from nanobot.security.workspace_access import current_scope_allows_loopback, current_tool_workspace
 from nanobot.security.workspace_policy import is_path_within
 
@@ -48,6 +49,18 @@ _WORKSPACE_BOUNDARY_NOTE = (
     "resource, tell them you cannot reach it under the current "
     "restrict_to_workspace policy and ask how to proceed."
 )
+
+
+class ExecToolConfig(Base):
+    """Shell exec tool configuration."""
+    enable: bool = True
+    timeout: int = Field(default=60, ge=0)  # Hard timeout (s); 0 = no limit. Not capped by the per-call max.
+    path_prepend: str = ""
+    path_append: str = ""
+    sandbox: str = ""
+    allowed_env_keys: list[str] = Field(default_factory=list)
+    allow_patterns: list[str] = Field(default_factory=list)
+    deny_patterns: list[str] = Field(default_factory=list)
 
 
 @dataclass(slots=True)

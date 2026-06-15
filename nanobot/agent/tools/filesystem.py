@@ -16,9 +16,15 @@ from nanobot.agent.tools.schema import (
     StringSchema,
     tool_parameters_schema,
 )
-from nanobot.config.tool_configs import FileToolsConfig
+from nanobot.config_base import Base
 from nanobot.security.workspace_access import current_tool_workspace
 from nanobot.utils.helpers import build_image_content_blocks, detect_image_mime
+
+
+class FileToolsConfig(Base):
+    """Filesystem tools configuration."""
+
+    enable: bool = True  # built-in file tools on by default
 
 
 class _FsTool(Tool):

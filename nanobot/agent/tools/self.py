@@ -10,10 +10,16 @@ from loguru import logger
 from nanobot.agent.tools.base import Tool
 from nanobot.agent.tools.context import ContextAware, RequestContext
 from nanobot.agent.tools.runtime_state import RuntimeState
-from nanobot.config.tool_configs import MyToolConfig
+from nanobot.config_base import Base
 
 if TYPE_CHECKING:
     from nanobot.agent.subagent import SubagentStatus
+
+
+class MyToolConfig(Base):
+    """Self-inspection tool configuration."""
+    enable: bool = True
+    allow_set: bool = False
 
 
 def _has_real_attr(obj: Any, key: str) -> bool:
