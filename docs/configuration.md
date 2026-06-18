@@ -401,6 +401,12 @@ Bedrock uses the native `bedrock-runtime` Converse API, so it can call Bedrock m
 
 This provider is for Bedrock's native Converse API, not Bedrock's OpenAI-compatible `/openai/v1` endpoint. For OpenAI-compatible Bedrock models, you can still use `custom` if you specifically want that API surface.
 
+Install Bedrock support first:
+
+```bash
+nanobot plugins enable bedrock
+```
+
 **1. Configure credentials**
 
 Use the normal AWS credential chain (`AWS_ACCESS_KEY_ID` / `AWS_SECRET_ACCESS_KEY`, an AWS profile, or an IAM role). The IAM identity needs:

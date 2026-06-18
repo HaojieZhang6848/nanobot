@@ -231,14 +231,14 @@ nanobot gateway
 <details>
 <summary><b>Matrix (Element)</b></summary>
 
-Install Matrix dependencies first:
+Enable Matrix support first:
 
 ```bash
-python -m pip install "nanobot-ai[matrix]"
+nanobot plugins enable matrix
 ```
 
 > [!NOTE]
-> Matrix is not supported on Windows. `matrix-nio[e2e]` depends on `python-olm`, which has no pre-built Windows wheel and is skipped by the `matrix` extra on `sys_platform == 'win32'`. The command above will still succeed on Windows but without `matrix-nio` installed, so enabling the Matrix channel will fail at startup. Use macOS, Linux, or WSL2.
+> Matrix encryption is disabled by default on Windows because `matrix-nio[e2e]` depends on `python-olm`, which has no pre-built Windows wheel. Use macOS, Linux, or WSL2 if you need Matrix E2EE.
 
 **1. Create/choose a Matrix account**
 
